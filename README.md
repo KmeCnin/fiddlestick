@@ -18,11 +18,30 @@ Load **Fiddlestick** from your HTML using CDN:
 
 ## Usage
 A **fiddlestick** is composed of multiple HTML elements.
-Each element from a single fiddlestick must share the same `data-fiddlestick-id`.  
+Each element from a single fiddlestick must share the same `data-fiddlestick-id`. This means it is possible to have multiple independants fiddlesticks in the same page.  
 Each element must have a `data-fiddlestick-type` defining its kind of language. Possible values are:
 - `data-fiddlestick-type="html"`: containing **HTML** code
 - `data-fiddlestick-type="js"`: containing **JavaScript** code
 - `data-fiddlestick-type="css"`: containing **CSS** code
 - `data-fiddlestick-type="render"`: will display the **rendering** of the fiddlestick  
 
-*Their must be only one `data-fiddlestick-type="render"` by `data-fiddlestick-id`.*
+**Important:**
+- Their must be only one `data-fiddlestick-type="render"` by `data-fiddlestick-id`.
+- But it is possible to have as many html/js/css types as we want, they will be concatenated by order of occurency.
+- html/js/css types can be editable elements (textarea, input, etc.) or readonly elements (div, span, etc.).
+
+## Example
+```html
+<textarea data-fiddlestick-id="first-fiddlestick" data-fiddlestick-type="html">
+  <!-- Data will be completed by user. -->
+</textarea>
+<textarea data-fiddlestick-id="first-fiddlestick" data-fiddlestick-type="js">
+  <!-- Data will be completed by user. -->
+</textarea>
+<div data-fiddlestick-id="first-fiddlestick" data-fiddlestick-type="css">
+p {
+  color: red;
+}
+</div>
+<div data-fiddlestick-id="first-fiddlestick" data-fiddlestick-type="render"></div>
+```
