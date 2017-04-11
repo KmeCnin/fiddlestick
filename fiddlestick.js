@@ -28,51 +28,24 @@
         });
     });
 })();
-function htmlDecode(input) {
-  var e = document.createElement('div');
-  e.innerHTML = input;
-  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-}
+
 function update(fiddleId) {
     var output = document.querySelector(
         '[data-fiddlestick-id='+fiddleId+'][data-fiddlestick-type=render]'
     );
     output.innerHTML = '';
     output.appendChild(document.createElement('iframe'));
-    
-    var cssCode = Array.prototype.slice.call(
-        document.querySelectorAll(
-            '[data-fiddlestick-id='+fiddleId+'][data-fiddlestick-type=css]'
-        )
-    )
-    .reduce(function (string, e) {
-        return string + e.innerHTML;
-    }, '');
 
-    var htmlCode = Array.prototype.slice.call(
-        document.querySelectorAll(
-            '[data-fiddlestick-id='+fiddleId+'][data-fiddlestick-type=html]'
-        )
-    )
-    .reduce(function (string, e) {
-        return string + e.value;
-    }, '');
-
-    var jsCode = Array.prototype.slice.call(
-        document.querySelectorAll(
-            '[data-fiddlestick-id='+fiddleId+'][data-fiddlestick-type=js]'
-        )
-    )
-    .reduce(function (string, e) {
-        return string + e.innerHTML;
-    }, '');
+    var cssCode = getAllFromLang(fiddleId, 'css');
+    var jsCode = getAllFromLang(fiddleId, 'js');
+    var htmlCode = getAllFromLang(fiddleId, 'html');
 
     var layout = '<html><head><style>'
-        + cssCode 
+        + htmlDecode(cssCode)
         + '</style></head><body><main>'
         + htmlCode
         + '</main><script>'
-        + jsCode
+        + htmlDecode(jsCode)
         + '</script></body></html>';
 
     var iframe = output.querySelector(
@@ -81,4 +54,36 @@ function update(fiddleId) {
     iframe.contentDocument.open();
     iframe.contentDocument.writeln(layout);
     iframe.contentDocument.close();
+}
+
+function getAllFromLang(fiddleId, lang) {
+    return Array.prototype.slice.call(
+        document.querySelectorAll(
+            '[data-fiddlestick-id='+fiddleId+']'+
+            '[data-fiddlestick-type='+lang+']'
+        )
+    )
+    .reduce(function (string, e) {
+        if (isTextBox(e)) {
+            return string + e.value;
+        } else {
+            return string + e.innerHTML;
+        }
+    }, '');
+}
+
+function htmlDecode(input) {
+    var e = document.createElement('div');
+    e.innerHTML = input;
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
+
+function isTextBox(element) {
+    var tagName = element.tagName.toLowerCase();
+    if (tagName === 'textarea') return true;
+    if (tagName !== 'input') return false;
+    var type = element.getAttribute('type').toLowerCase(),
+        // if any of these input types is not supported by a browser, it will behave as input type text.
+        inputTypes = ['text', 'password', 'number', 'email', 'tel', 'url', 'search', 'date', 'datetime', 'datetime-local', 'time', 'month', 'week']
+    return inputTypes.indexOf(type) >= 0;
 }

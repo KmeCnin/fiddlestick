@@ -1,0 +1,214 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>Help Mr Hankey</h1>
+        <div
+            data-fiddlestick-id="hankey"
+            data-fiddlestick-type="js"
+            style="display: none;"
+        >
+            function loop(obstacle) {
+        </div>
+        <textarea
+            data-fiddlestick-id="hankey"
+            data-fiddlestick-type="js"
+        ></textarea>
+        <div
+            data-fiddlestick-id="hankey"
+            data-fiddlestick-type="js"
+            style="display: none;"
+        >
+            return {action: action};
+            }
+            var steps = [0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,3,0,1,0,2,0,1,0,0,3,0,2,0,0,2,0,0,0];
+            var bg = document.getElementById("bg");
+            var hankey = document.querySelector('#poo');
+            steps.forEach(function (step, i) {
+                if (step === 1) {
+                    var toilet = document.querySelectorAll('.toilet')[0].cloneNode(true);
+                    bg.appendChild(toilet);
+                    toilet.style.left = (10*(i+1))+"%";
+                } else if (step === 3) {
+                    var plunger = document.querySelectorAll('.plunger')[0].cloneNode(true);
+                    bg.appendChild(plunger);
+                    plunger.style.left = (10*(i+1))+"%";
+                } else if (step === 2) {
+                    var paper = document.querySelectorAll('.paper')[0].cloneNode(true);
+                    bg.appendChild(paper);
+                    paper.style.left = (10*(i+1))+"%";
+                }
+            });
+            scroll(0);
+            function scroll(i) {
+                document.querySelectorAll(".toilet, .plunger, .paper").forEach(function (toilet) {
+                    var oldPos = parseInt(toilet.style.left);
+                    toilet.style.left = (oldPos-10)+"%";
+                });
+                var input = loop(steps[i+1]);
+                if (input.action === "sauter" || loop(steps[i]).action === "sauter") {
+                    console.log("jump");
+                    hankey.style.animation = "jump 1000ms ease-out infinite alternate";
+                    hankey.style.bottom = "300px";
+                } else if (input.action === "se baisser" || loop(steps[i]).action === "se baisser") {
+                    console.log("crouch");
+                    hankey.style.animation = "crouch 1000ms ease-out infinite alternate";
+                    hankey.style.bottom = "300px";
+                }  else if (input.action === "avancer") {
+                    console.log("walk");
+                    hankey.style.animation = "bounce 500ms ease-out infinite alternate";
+                    hankey.style.bottom = "100px";
+                } else {
+                    console.log("wait");
+                    return;
+                }
+                if ((steps[i+1] === 1 && input.action !== "sauter") ||
+                    (steps[i+1] === 2 && input.action !== "se baisser") ||
+                    (steps[i] === 1 && input.action === "sauter") ||
+                    (steps[i] === 2 && input.action === "se baisser")) {
+                    console.log('hit');
+                    hankey.style.animation = "die 2s linear";
+                    hankey.style.bottom = "90px";
+                    hankey.style.transform = "scale(0)";
+                    ending("You Lose...");
+                    return;
+                }
+                if (i < steps.length) {
+                    setTimeout(() => scroll(i + 1), 1000);
+                } else {
+                    ending("You Win!");
+                }
+            }
+            function ending(msg) {
+                var container = document.querySelector("#msg");
+                container.innerHTML = msg;
+                container.className = "active";
+            }
+        </div>
+        <div
+            data-fiddlestick-id="hankey"
+            data-fiddlestick-type="css"
+            style="display: none;"
+        >
+            @import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina');
+            html, body {
+                background-color: #5BA4DB;
+                height: 100%;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+            }
+            #bg {
+                background: url(http://img08.deviantart.net/6ee6/i/2015/097/9/5/side_scrolling_platformer_bg_art_by_nrvrl-d8ov5ek.png) repeat-x bottom center;
+                width: 100%;
+                height: 100%;
+            }
+            #poo {
+                position: absolute;
+                bottom: 100px;
+                left: 10%;
+                z-index: 10;
+                height: 160px;
+                margin-left: 20px;
+                animation: bounce 500ms ease-out infinite alternate;
+                transition: bottom 1s ease-out, rotate 1s ease-out;
+            }
+            @keyframes bounce {
+                from {bottom: 100px;}
+                to {bottom: 150px;}
+            }
+            @keyframes jump {
+                from {bottom: 100px;}
+                to {bottom: 360px;}
+            }
+            @keyframes crouch {
+                from {bottom: 100px; transform: rotate(0deg);}
+                to {bottom: 50px; transform: rotate(90deg);}
+            }
+            @keyframes die {
+                from {transform: scale(1) rotate(0);}
+                to {transform: scale(0) rotate(1000deg);}
+            }
+            .toilet {
+                position: absolute;
+                bottom: 65px;
+                z-index: 5;
+                height: 200px;
+                transform: scaleX(-1) rotate(-5deg);
+                left: -100%;
+                will-change: left;
+                transition: left 500ms ease-out;
+                animation: vibrate 500ms ease-out infinite alternate;
+            }
+            @keyframes vibrate {
+                from {transform: scaleX(-1) rotate(-5deg);}
+                to {transform: scaleX(-1) rotate(25deg);}
+            }
+            @keyframes vibrate2 {
+                from {transform: rotate(-10deg) translate(-100px);}
+                to {transform: rotate(10deg) translate(-100px);}
+            }
+            @keyframes vibrate3 {
+                from {bottom: 170px;}
+                to {bottom: 190px;}
+            }
+            .paper {
+                position: absolute;
+                bottom: 170px;
+                z-index: 5;
+                background: url(https://sdl-stickershop.line.naver.jp/stickershop/v1/product/1012885/LINEStorePC/main@2x.png;compress=true);
+                width: 240px;
+                height: 200px;
+                transform: scaleX(-0.7) scaleY(0.7) translate(100px);
+                left: -100%;
+                animation: vibrate3 1s linear infinite alternate;
+                transition: left 1s linear;
+            }
+            .plunger {
+                position: absolute;
+                bottom: 80px;
+                z-index: 5;
+                width: 300px;
+                height: 230px;
+                left: -100%;
+                animation: vibrate2 250ms ease-out infinite alternate;
+                transition: left 1s linear;
+            }
+            #msg {
+                font-family: 'Baloo Bhaina', cursive;
+                position: absolute;
+                z-index: 100;
+                transform: scale(0);
+                font-size: 100px;
+                color: #915b0f;
+                text-align: center;
+                width: 100%;
+                transition: transform 1500ms ease-in;
+            }
+            #msg.active {
+                transform: scale(1);
+            }
+        </div>
+        <div
+            data-fiddlestick-id="hankey"
+            data-fiddlestick-type="html"
+            style="display: none;"
+        >
+            <div id="bg">
+                <img id="poo" src="http://vignette3.wikia.nocookie.net/southpark/images/f/f8/Mr._Hankey_transparent.PNG/revision/latest?cb=20161105035353">
+                <img class="toilet" src="http://www.clipartbest.com/cliparts/KTj/Xez/KTjXezRqc.png">
+                <div class="paper"></div>
+                <img class="plunger" src="http://img10.deviantart.net/c92e/i/2015/102/b/4/commission__plunger_by_11111111211123-d8phawa.png">
+                <div id="msg"></div>
+            </div>
+        </div>
+        <div
+            data-fiddlestick-id="hankey"
+            data-fiddlestick-type="render"
+        ></div>
+
+        <script src="../fiddlestick.js"></script>
+    </body>
+</html>
