@@ -10,22 +10,6 @@ var fiddlestick = (function () {
     })
     .forEach(function(fiddleId) {
         update(fiddleId);
-        document.querySelectorAll(
-            '[data-fiddlestick-type=js], ' +
-            '[data-fiddlestick-type=html], ' +
-            '[data-fiddlestick-type=css]'
-        ).forEach(function (element) {
-            element.addEventListener('keyup', function (event) {
-                console.log('changed');
-                var fiddle = event.target || event.srcElement;
-                update(fiddle.getAttribute('data-fiddlestick-id'));
-            });
-            element.addEventListener('change', function (event) {
-                console.log('changed');
-                var fiddle = event.target || event.srcElement;
-                update(fiddle.getAttribute('data-fiddlestick-id'));
-            });
-        });
     });
 
     function update(fiddleId) {
@@ -63,8 +47,14 @@ var fiddlestick = (function () {
             )
         )
         .reduce(function (string, e) {
+            if (hasAceEditor(e)) {
+                return e.querySelector('.ace_text-input').value;
+            }
             if (isTextBox(e)) {
                 return string + e.value;
+            } else if (hasAceEditor(e)) {
+                console.log(e.querySelector('.ace_text-input').value);
+                return e.querySelector('.ace_text-input').value;
             } else {
                 return string + e.innerHTML;
             }
@@ -82,9 +72,13 @@ var fiddlestick = (function () {
         if (tagName === 'textarea') return true;
         if (tagName !== 'input') return false;
         var type = element.getAttribute('type').toLowerCase(),
-            // if any of these input types is not supported by a browser, it will behave as input type text.
-            inputTypes = ['text', 'password', 'number', 'email', 'tel', 'url', 'search', 'date', 'datetime', 'datetime-local', 'time', 'month', 'week']
+        // if any of these input types is not supported by a browser, it will behave as input type text.
+        inputTypes = ['text', 'password', 'number', 'email', 'tel', 'url', 'search', 'date', 'datetime', 'datetime-local', 'time', 'month', 'week']
         return inputTypes.indexOf(type) >= 0;
+    }
+
+    function hasAceEditor(element) {
+        return element.querySelector('.ace_text-input') !== null;
     }
 
     return {
