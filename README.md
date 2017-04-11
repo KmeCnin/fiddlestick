@@ -32,6 +32,7 @@ Each element must have a `data-fiddlestick-type` defining its kind of language. 
 
 ## Example
 ```html
+<!-- One first Fiddlestick -->
 <textarea data-fiddlestick-id="first-fiddlestick" data-fiddlestick-type="html">
   <!-- Data will be completed by user. -->
 </textarea>
@@ -44,4 +45,15 @@ p {
 }
 </div>
 <div data-fiddlestick-id="first-fiddlestick" data-fiddlestick-type="render"></div>
+
+<!-- Another Fiddlestick in the same page -->
+<textarea data-fiddlestick-id="second-fiddlestick" data-fiddlestick-type="js">
+  <!-- Data will be completed by user. -->
+</textarea>
+<div data-fiddlestick-id="second-fiddlestick" data-fiddlestick-type="js">
+  <!-- Define here JavaScript code in readonly. It will be added at the end of the previous code then rendered. -->
+</div>
+<div data-fiddlestick-id="second-fiddlestick" data-fiddlestick-type="render"></div>
 ```
+
+## Working examples
