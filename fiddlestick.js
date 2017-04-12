@@ -1,4 +1,4 @@
-var fiddlestick = (function () {
+(function () {
    
     function init() {
         // Init fiddles mapping.
@@ -102,8 +102,4 @@ var fiddlestick = (function () {
     }
 
     init();
-
-    return {
-        update: update,
-    };
 })();
