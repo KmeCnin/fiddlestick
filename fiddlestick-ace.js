@@ -1,27 +1,85 @@
-var fiddlestick = (function () {
-    Array.prototype.slice.call(
-        document.querySelectorAll('[data-fiddlestick-id]')
-    )
-    .map(function (e) {
-        return e.getAttribute('data-fiddlestick-id');
-    })
-    .filter(function (value, index, self) { 
-        return self.indexOf(value) === index;
-    })
-    .forEach(function(fiddleId) {
-        update(fiddleId);
-    });
+(function () {
 
-    function update(fiddleId) {
-        var output = document.querySelector(
-            '[data-fiddlestick-id='+fiddleId+'][data-fiddlestick-type=render]'
-        );
+    // TODO: test for ace editor dependency.
+   
+    function init() {
+        // Init fiddles mapping.
+        var data = {};
+        document
+            .querySelectorAll('[data-fiddlestick-id]')
+            .forEach(function(e) {
+                var fiddleId = e.getAttribute('data-fiddlestick-id');
+                var fiddleType = e.getAttribute('data-fiddlestick-type');
+
+                if (!data.hasOwnProperty(fiddleId)) {
+                    data[fiddleId] = {};
+                }
+
+                if (!data[fiddleId].hasOwnProperty(fiddleType)) {
+                    data[fiddleId][fiddleType] = [];
+                }
+
+                if (fiddleType === 'render') {
+                    data[fiddleId].render = {
+                        'element': e,
+                        'type': fiddleType,
+                        'id': fiddleId,
+                    };
+                } else {
+                    if (e.tagName.toLowerCase() === 'textarea') {
+                        editor = ace.edit(e);
+                        editor.setTheme("ace/theme/monokai");
+                        editor.getSession().setMode("ace/mode/javascript");
+                        data[fiddleId][fiddleType].push({
+                            'editor': editor,
+                            'type': fiddleType,
+                            'id': fiddleId,
+                        });
+                        editor.getSession().on('change', function(event) {
+                            for(var fiddleId in data) { 
+                                if (data.hasOwnProperty(fiddleId)) {
+                                    update(data[fiddleId]);
+                                }
+                            }
+                        });
+                    } else {
+                        data[fiddleId][fiddleType].push({
+                            'element': e,
+                            'type': fiddleType,
+                            'id': fiddleId,
+                        });
+                        e.addEventListener('keyup', function (event) {
+                            var fiddle = event.target || event.srcElement;
+                            update(
+                                data[fiddle.getAttribute('data-fiddlestick-id')]
+                            );
+                        });
+                        e.addEventListener('change', function (event) {
+                            var fiddle = event.target || event.srcElement;
+                            update(
+                                data[fiddle.getAttribute('data-fiddlestick-id')]
+                            );
+                        });
+                    }
+                }
+            });
+
+        for(var fiddleId in data) { 
+            if (data.hasOwnProperty(fiddleId)) {
+                update(data[fiddleId]);
+            }
+        }
+    }
+
+    function update(fiddle) {
+        var iframe = document.createElement('iframe');
+        var output = fiddle.render.element;
         output.innerHTML = '';
-        output.appendChild(document.createElement('iframe'));
+        output.appendChild(iframe);
 
-        var cssCode = getAllFromLang(fiddleId, 'css');
-        var jsCode = getAllFromLang(fiddleId, 'js');
-        var htmlCode = getAllFromLang(fiddleId, 'html');
+        var cssCode = getAllFromLang(fiddle.css);
+        var jsCode = getAllFromLang(fiddle.js);
+        var htmlCode = getAllFromLang(fiddle.html);
 
         var layout = '<html><head><style>'
             + htmlDecode(cssCode)
@@ -31,34 +89,26 @@ var fiddlestick = (function () {
             + htmlDecode(jsCode)
             + '</script></body></html>';
 
-        var iframe = output.querySelector(
-            '[data-fiddlestick-id='+fiddleId+'] iframe'
-        );
         iframe.contentDocument.open();
         iframe.contentDocument.writeln(layout);
         iframe.contentDocument.close();
     }
 
-    function getAllFromLang(fiddleId, lang) {
-        return Array.prototype.slice.call(
-            document.querySelectorAll(
-                '[data-fiddlestick-id='+fiddleId+']'+
-                '[data-fiddlestick-type='+lang+']'
-            )
-        )
-        .reduce(function (string, e) {
-            if (hasAceEditor(e)) {
-                return e.querySelector('.ace_text-input').value;
-            }
-            if (isTextBox(e)) {
-                return string + e.value;
-            } else if (hasAceEditor(e)) {
-                console.log(e.querySelector('.ace_text-input').value);
-                return e.querySelector('.ace_text-input').value;
-            } else {
-                return string + e.innerHTML;
-            }
-        }, '');
+    function getAllFromLang(langElements) {
+        if (langElements === undefined) {
+            return '';
+        }
+
+        return langElements
+            .reduce(function (string, e) {
+                if (e.editor !== undefined) {
+                    return string + e.editor.getValue();
+                } else if(isTextBox(e.element)) {
+                    return string + e.element.value;
+                } else {
+                    return string + e.element.innerHTML;
+                }
+            }, '');
     }
 
     function htmlDecode(input) {
@@ -77,11 +127,5 @@ var fiddlestick = (function () {
         return inputTypes.indexOf(type) >= 0;
     }
 
-    function hasAceEditor(element) {
-        return element.querySelector('.ace_text-input') !== null;
-    }
-
-    return {
-        update: update,
-    };
+    init();
 })();
