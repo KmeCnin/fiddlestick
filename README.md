@@ -57,3 +57,6 @@ p {
 ```
 
 ## Working examples
+### Simple fiddlestick example
+You can use a very simple fiddlestick with raw textarea using `fiddlestick.js`.  
+[Live example](https://kmecnin.github.io/fiddlestick/example/simple)
