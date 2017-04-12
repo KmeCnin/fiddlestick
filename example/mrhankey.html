@@ -58,15 +58,12 @@
                 >
                     function loop(obstacle) {
                 </div>
-                <div
+                <textarea
                     data-fiddlestick-id="hankey"
                     data-fiddlestick-type="js"
                 >
-                    <textarea
-                        id="editor"
-                    >
 
-var action = "attendre";
+var action = "wait";
 
 /* Un-comment solution for testing.
 
@@ -79,7 +76,6 @@ if (obstacle === 1 || obstacle === 3) {
 }
 
 */</textarea>
-                </div>
                 <div
                     data-fiddlestick-id="hankey"
                     data-fiddlestick-type="js"
@@ -277,13 +273,5 @@ if (obstacle === 1 || obstacle === 3) {
         ></div>
 
         <script src="../fiddlestick-ace.js"></script>
-        <script>
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
-            editor.getSession().setMode("ace/mode/javascript");
-            editor.getSession().on('change', function(e) {
-                fiddlestick.update('hankey');
-            });
-        </script>
     </body>
 </html>
