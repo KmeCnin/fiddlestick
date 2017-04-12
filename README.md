@@ -73,4 +73,4 @@ You can use a very simple fiddlestick with raw textarea using `fiddlestick.js`.
 ### Ace editor fiddlestick example
 You can use a code editor-like area using integration with [Ace editor](https://ace.c9.io/) by using `fiddlestick-ace.js`.  
 You have to include Ace editor before FiddleStick.  
-[Live example](https://kmecnin.github.io/fiddlestick/example/simple)
+[Live example](https://kmecnin.github.io/fiddlestick/example/mrhankey)
