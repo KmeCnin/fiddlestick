@@ -1,6 +1,10 @@
 (function () {
 
-    // TODO: test for ace editor dependency.
+    // Test for ace editor dependency.
+    if (typeof ace === 'undefined') {
+        console.error('You have to load Ace editor (https://ace.c9.io) before FiddleStick or use fiddlestick.js instead of fiddlestick-ace.js.');
+        return;
+    }
    
     function init() {
         // Init fiddles mapping.
