@@ -4,9 +4,9 @@
 ## Installation
 
 ### Fast
-Load **Fiddlestick** from your HTML using CDN:
+Load **Fiddlestick** from your HTML using RawGit CDN:
 ```html
-<script src="https://cdn.rawgit.com/KmeCnin/fiddlestick/63d9f04b/fiddlestick.js"></script>
+<script src="https://cdn.rawgit.com/KmeCnin/fiddlestick/441e952a/fiddlestick.js"></script>
 ```
 
 ### Clean
@@ -57,3 +57,6 @@ p {
 ```
 
 ## Working examples
+### Simple fiddlestick example
+You can use a very simple fiddlestick with raw textarea using `fiddlestick.js`.  
+[Live example](https://kmecnin.github.io/fiddlestick/example/simple)
