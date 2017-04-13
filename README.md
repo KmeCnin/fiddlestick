@@ -1,6 +1,10 @@
 # Fiddlestick
 **FiddleStick** is a local *JSFiddle* easy to use and modulate.
 
+- [Installation](#installation)
+- [Usage](#usage)
+- [Working examples](#working-examples)
+
 ## Installation
 
 ### Fast
