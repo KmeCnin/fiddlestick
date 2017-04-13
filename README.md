@@ -3,6 +3,7 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Example](#example)
 - [Working examples](#working-examples)
 
 ## Installation
