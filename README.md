@@ -1,4 +1,4 @@
-# Fiddlestick
+# FiddleStick
 **FiddleStick** is a local *JSFiddle* easy to use and modulate.
 
 - [Installation](#installation)
@@ -21,7 +21,7 @@ Load **FiddleStick** from your HTML using RawGit CDN:
 
 ### Clean
 1. Copy file https://github.com/KmeCnin/fiddlestick/blob/master/fiddlestick.js into your project directory.
-2. Load **Fiddlestick** from your HTML:
+2. Load **FiddleStick** from your HTML:
 ```html
 <!-- Basic textarea support: -->
 <script src="path/to/fiddlestick.js"></script>
@@ -35,7 +35,7 @@ Load **FiddleStick** from your HTML using RawGit CDN:
 
 ## Usage
 A **FiddleStick** is composed of multiple HTML elements.
-Each element from a single fiddlestick must share the same `data-fiddlestick-id`. This means it is possible to have multiple independants fiddlesticks in the same page.  
+Each element from a single FiddleStick must share the same `data-fiddlestick-id`. This means it is possible to have multiple independants fiddlesticks in the same page.  
 Each element must have a `data-fiddlestick-type` defining its kind of language. Possible values are:
 - `data-fiddlestick-type="html"`: containing **HTML** code
 - `data-fiddlestick-type="js"`: containing **JavaScript** code
@@ -74,10 +74,10 @@ p {
 ```
 
 ## Working examples
-### Simple fiddlestick example
+### Simple FiddleStick example
 You can use a very simple fiddlestick with raw textarea using `fiddlestick.js`.  
 [Live example](https://kmecnin.github.io/fiddlestick/example/simple)
-### Ace editor fiddlestick example
+### Ace editor FiddleStick example
 You can use a code editor-like area using integration with [Ace editor](https://ace.c9.io/) by using `fiddlestick-ace.js`.  
 You have to include Ace editor before FiddleStick.  
 [Live example](https://kmecnin.github.io/fiddlestick/example/mrhankey)
