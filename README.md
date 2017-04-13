@@ -11,6 +11,7 @@ Load **FiddleStick** from your HTML using RawGit CDN:
 ```
 ```html
 <!-- Ace editor support: -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
 <script src="https://cdn.rawgit.com/KmeCnin/fiddlestick/v0.1.0/fiddlestick-ace.js"></script>
 ```
 
@@ -21,8 +22,10 @@ Load **FiddleStick** from your HTML using RawGit CDN:
 <!-- Basic textarea support: -->
 <script src="path/to/fiddlestick.js"></script>
 ```
+3. **OR** if you want to use ace editor integration instead:
 ```html
 <!-- Ace editor support: -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
 <script src="path/to/fiddlestick-ace.js"></script>
 ```
 
