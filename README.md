@@ -1,5 +1,5 @@
 # FiddleStick
-**FiddleStick** is a local *JSFiddle* easy to use and modulate.
+**FiddleStick** is a local [JSFiddle](https://jsfiddle.net/) easy to use and modulate.
 
 - [Installation](#installation)
 - [Usage](#usage)
