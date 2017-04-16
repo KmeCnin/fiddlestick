@@ -33,7 +33,8 @@
                     if (e.tagName.toLowerCase() === 'textarea') {
                         editor = ace.edit(e);
                         editor.setTheme("ace/theme/monokai");
-                        editor.getSession().setMode("ace/mode/javascript");
+                        var lang = fiddleType === 'js' ? 'javascript' : fiddleType;
+                        editor.getSession().setMode("ace/mode/"+lang);
                         data[fiddleId][fiddleType].push({
                             'editor': editor,
                             'type': fiddleType,
