@@ -1,5 +1,6 @@
 # FiddleStick
-**FiddleStick** is a local [JSFiddle](https://jsfiddle.net/) easy to use and modulate.
+**FiddleStick** is a local [JSFiddle](https://jsfiddle.net/) easy to use and modulate.  
+There is currently 2 possible behaviours: **Basic textarea** or **Ace editor**.
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -9,35 +10,43 @@
 ## Installation
 
 ### Fast
-Load **FiddleStick** from your HTML using RawGit CDN:
+Load **FiddleStick** from your HTML using [RawGit](https://rawgit.com/) CDN:
+
+#### Basic textarea
 ```html
-<!-- Basic textarea support: -->
 <script src="https://cdn.rawgit.com/KmeCnin/fiddlestick/v0.1.0/fiddlestick.js"></script>
 ```
+
+#### Ace editor
 ```html
-<!-- Ace editor support: -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
 <script src="https://cdn.rawgit.com/KmeCnin/fiddlestick/v0.1.0/fiddlestick-ace.js"></script>
 ```
 
 ### Clean
-1. Copy file https://github.com/KmeCnin/fiddlestick/blob/master/fiddlestick.js into your project directory.
-2. Load **FiddleStick** from your HTML:
+
+#### Basic textarea
+1. Copy file https://raw.githubusercontent.com/KmeCnin/fiddlestick/master/fiddlestick.js into your project directory.
+2. Load **FiddleStick** in your HTML:
 ```html
-<!-- Basic textarea support: -->
 <script src="path/to/fiddlestick.js"></script>
 ```
-3. **OR** if you want to use ace editor integration instead:
+
+#### Ace editor
+1. Copy file https://raw.githubusercontent.com/KmeCnin/fiddlestick/master/fiddlestick-ace.js into your project directory.
+2. Load **Ace editor** in your HTML using CDN:
 ```html
-<!-- Ace editor support: -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
+```
+3. Load **FiddleStick** in your HTML:
+```html
 <script src="path/to/fiddlestick-ace.js"></script>
 ```
 
 ## Usage
-A **FiddleStick** is composed of multiple HTML elements.
+A **FiddleStick** is composed of multiple HTML elements.  
 Each element from a single FiddleStick must share the same `data-fiddlestick-id`. This means it is possible to have multiple independants fiddlesticks in the same page.  
-Each element must have a `data-fiddlestick-type` defining its kind of language. Possible values are:
+Each element must have a `data-fiddlestick-type` defining its kind of language. Possible values are:  
 - `data-fiddlestick-type="html"`: containing **HTML** code
 - `data-fiddlestick-type="js"`: containing **JavaScript** code
 - `data-fiddlestick-type="css"`: containing **CSS** code
@@ -49,6 +58,9 @@ Each element must have a `data-fiddlestick-type` defining its kind of language. 
 - html/js/css types can be editable elements (textarea, input, etc.) or readonly elements (div, span, etc.).
 
 ## Example
+You can use multiple fiddlesticks in the same page.  
+Editable data must be placed in `<textarea>` and un-editable data can be for instance in a `<div>`.  
+You can `display: none` a block of fiddlestick in order to hide it from the user but it will still be concatenated to your rendered fiddlestick.  
 ```html
 <!-- One first Fiddlestick -->
 <textarea data-fiddlestick-id="first-fiddlestick" data-fiddlestick-type="html">
