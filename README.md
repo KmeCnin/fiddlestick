@@ -14,13 +14,13 @@ Load **FiddleStick** from your HTML using [RawGit](https://rawgit.com/) CDN:
 
 #### Basic textarea
 ```html
-<script src="https://cdn.rawgit.com/KmeCnin/fiddlestick/v0.1.0/fiddlestick.js"></script>
+<script src="https://cdn.rawgit.com/KmeCnin/fiddlestick/v0.1.2/fiddlestick.js"></script>
 ```
 
 #### Ace editor
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
-<script src="https://cdn.rawgit.com/KmeCnin/fiddlestick/v0.1.0/fiddlestick-ace.js"></script>
+<script src="https://cdn.rawgit.com/KmeCnin/fiddlestick/v0.1.2/fiddlestick-ace.js"></script>
 ```
 
 ### Clean
